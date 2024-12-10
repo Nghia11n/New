@@ -1,0 +1,193 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/WetCheezit/Bracket-V2/main/src.lua"))()
+
+-- Window
+local Window, MainGUI = Library:CreateWindow("Bracket-V2")
+
+-- Tabs
+local Tab1 = Window:CreateTab("Tab 1")
+local Tab2 = Window:CreateTab("Tab 2")
+
+local Groupbox1 = Tab1:CreateGroupbox("Groupbox 1", "Left")
+local Groupbox2 = Tab1:CreateGroupbox("Groupbox 2", "Right")
+
+local Groupbox3 = Tab2:CreateGroupbox("Groupbox 1", "Left")
+local Groupbox4 = Tab2:CreateGroupbox("Groupbox 2", "Right")
+
+-- Groupbox 1
+local ExampleToggle = Groupbox1:CreateToggle("Example toggle", function(state)
+   print(state)
+end)
+
+local ExampleToggle2 = Groupbox1:CreateToggle("Example keybind", function(state)
+   print(state)
+end)
+
+local ExampleButton = Groupbox1:CreateButton("Example Button", function()
+    print("Pressed")
+end)
+
+ExampleToggle2:CreateKeyBind()
+
+local ExampleSlider = Groupbox1:CreateSlider("Example slider", 0, 25, 0, function(value)
+   print(value)
+end)
+
+local ExampleDropdown = Groupbox1:CreateDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(state)
+   print(state)
+end)
+
+local ExampleColorPicker = Groupbox1:CreateColorPicker("Color", Color3.fromRGB(0, 0, 0), function(state)
+   print(state.R, state.G, state.B)
+end)
+
+-- Groupbox 2
+-- Tạo toggle cho FastAttack
+local ExampleToggle2 = Groupbox2:CreateToggle("Enable Fast Attack", function(state)
+    -- Thay đổi giá trị của _G.FastAttack khi toggle thay đổi
+    _G.FastAttack = state
+    if state then
+        print("Fast Attack enabled")
+    else
+        print("Fast Attack disabled")
+    end
+end)
+
+-- Tiếp tục với các đoạn mã hiện tại của bạn
+local CameraShaker = require(game.ReplicatedStorage.Util.CameraShaker)
+CombatFrameworkR = require(game:GetService("Players").LocalPlayer.PlayerScripts.CombatFramework)
+y = debug.getupvalues(CombatFrameworkR)[2]
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.FastAttack then
+            if typeof(y) == "table" then
+                pcall(function()
+                    CameraShaker:Stop()
+                    y.activeController.timeToNextAttack = (math.huge^math.huge^math.huge)
+                    y.activeController.timeToNextAttack = 0
+                    y.activeController.hitboxMagnitude = 60
+                    y.activeController.active = false
+                    y.activeController.timeToNextBlock = 0
+                    y.activeController.focusStart = 1655503339.0980349
+                    y.activeController.increment = 1
+                    y.activeController.blocking = false
+                    y.activeController.attacking = false
+                    y.activeController.humanoid.AutoRotate = true
+                end)
+            end
+        end
+    end)
+end)
+
+spawn(function()
+    game:GetService("RunService").RenderStepped:Connect(function()
+        if _G.FastAttack or _G.FastAttackCambodiakak == true then
+            game.Players.LocalPlayer.Character.Stun.Value = 0
+            game.Players.LocalPlayer.Character.Busy.Value = false        
+        end
+    end)
+end)
+
+local CamShake = require(game.ReplicatedStorage.Util.CameraShaker)
+CamShake:Stop()
+local Client = game.Players.LocalPlayer
+local STOP = require(Client.PlayerScripts.CombatFramework.Particle)
+local STOPRL = require(game:GetService("ReplicatedStorage").CombatFramework.RigLib)
+spawn(function()
+    while task.wait() do
+        pcall(function()
+            if not shared.orl then shared.orl = STOPRL.wrapAttackAnimationAsync end
+            if not shared.cpc then shared.cpc = STOP.play end
+            STOPRL.wrapAttackAnimationAsync = function(a,b,c,d,func)
+                local Hits = STOPRL.getBladeHits(b,c,d)
+                if Hits then
+                    if _G.FastAttack then
+                        STOP.play = function() end
+                        a:Play(0.01,0.01,0.01)
+                        func(Hits)
+                        STOP.play = shared.cpc
+                        wait(a.length * 0.5)
+                        a:Stop()
+                    else
+                        a:Play()
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+local ExampleToggle3 = Groupbox2:CreateToggle("Example keybind", function(state)
+   print(state)
+end)
+
+local ExampleButton2 = Groupbox2:CreateButton("Example Button", function()
+    print("Pressed")
+end)
+
+ExampleToggle3:CreateKeyBind()
+
+local ExampleSlider2 = Groupbox2:CreateSlider("Example slider", 0, 25, 0, function(value)
+   print(value)
+end)
+
+local ExampleDropdown2 = Groupbox2:CreateDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(state)
+   print(state)
+end)
+
+local ExampleColorPicker2 = Groupbox2:CreateColorPicker("Color", Color3.fromRGB(0, 0, 0), function(state)
+   print(state.R, state.G, state.B)
+end)
+
+-- Groupbox 3
+local ExampleToggle4 = Groupbox3:CreateToggle("Example toggle", function(state)
+   print(state)
+end)
+
+local ExampleToggle5 = Groupbox3:CreateToggle("Example keybind", function(state)
+   print(state)
+end)
+
+local ExampleButton3 = Groupbox3:CreateButton("Example Button", function()
+    print("Pressed")
+end)
+
+ExampleToggle5:CreateKeyBind()
+
+local ExampleSlider3 = Groupbox3:CreateSlider("Example slider", 0, 25, 0, function(value)
+   print(value)
+end)
+
+local ExampleDropdown3 = Groupbox3:CreateDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(state)
+   print(state)
+end)
+
+local ExampleColorPicker3 = Groupbox3:CreateColorPicker("Color", Color3.fromRGB(0, 0, 0), function(state)
+   print(state.R, state.G, state.B)
+end)
+
+-- Groupbox 4
+local ExampleToggle5 = Groupbox4:CreateToggle("Example toggle", function(state)
+   print(state)
+end)
+
+local ExampleToggle6 = Groupbox4:CreateToggle("Example keybind", function(state)
+   print(state)
+end)
+
+local ExampleButton4 = Groupbox4:CreateButton("Example Button", function()
+    print("Pressed")
+end)
+
+ExampleToggle6:CreateKeyBind()
+
+local ExampleSlider4 = Groupbox4:CreateSlider("Example slider", 0, 25, 0, function(value)
+   print(value)
+end)
+
+local ExampleDropdown4 = Groupbox4:CreateDropdown("Example Dropdown", {"Option 1", "Option 2", "Option 3"}, function(state)
+   print(state)
+end)
+
+local ExampleColorPicker4 = Groupbox4:CreateColorPicker("Color", Color3.fromRGB(0, 0, 0), function(state)
+   print(state.R, state.G, state.B)
+end)
